@@ -108,6 +108,16 @@ void etiquettage(byte** binary, rgb8 ** image, char nomImageResultat[255], long 
 	
 	etiquette = imatrix(nrl, nrh, ncl, nch);
 
+	//déclaration table de correspondance
+	int tableCorrespondance[maxEtiquette][2];
+	int a;
+	for(a=0;a<maxEtiquette;a++)
+	{
+		tableCorrespondance[a][0] = a+1;
+		tableCorrespondance[a][1] = 0;
+	}
+
+	//preparation fichier de sortie pour l'image en cours
 	i = 0;
 	while (nomImageResultat[i] != '.')
 	{
@@ -116,6 +126,7 @@ void etiquettage(byte** binary, rgb8 ** image, char nomImageResultat[255], long 
 	}
 	nameF[i] = '.'; nameF[i+1] = 't'; nameF[i+2] = 'x'; nameF[i+3] = 't';
 
+	// 1er balayage de l'image
 	for (i = nrl; i < nrh; i++)
 	{
 		for (j = ncl; j < nch; j++)
@@ -157,6 +168,13 @@ void etiquettage(byte** binary, rgb8 ** image, char nomImageResultat[255], long 
 					{
 						int k, l;
 
+/*
+	ici, on reparcourt l'ensemble des pixels précédant. Passage à supprimer
+	le but ici est d'implémenter la méthode non intuitive, pour gagner en perfs
+	(on s'assure qu'il n'y ait que 2 passages de boucle)
+	TODO: implémenter la table de correspondance
+	TODO: implémenter le deuxième parcours de boucle pour maj label region (avec table de correspondance)
+*/
 						for (k = nrl; k <= i; k++)
 						{
 							for (l = ncl; l < nch; l++)
@@ -180,6 +198,22 @@ void etiquettage(byte** binary, rgb8 ** image, char nomImageResultat[255], long 
 			}
 		}
 	}
+
+
+
+// 2e balayage
+	//on parcourt tous les éléments de la matrice, représentant le numéro
+	//de l'étiquette de la région du pixel dans l'image
+	for (i = nrl; i < nrh; i++)
+	{
+		for (j = ncl; j < nch; j++)
+		{
+			etiquette[i][j];
+		}
+	}
+
+
+// Calcul et sauvegarde des données caractéristiques des régions
 
 	FILE* fichier = NULL;
     fichier = fopen(nameF, "w+");
@@ -316,10 +350,10 @@ void colorToNdg(rgb8** ImageColor, char* nomImageColor, byte** ImageNdg, char* n
 	}
 
 	// Ecriture
-	SavePGM_bmatrix(ImageNdg,nrl,nrh,ncl,nch,nom_imageNDG);
+	SavePGM_bmatrix(ImageNdg,nrl,nrh,ncl,nch,nomImageNdg);
 }
 
-void colorToNdg(rgb8** ImageNdg, char* nomImageNdg, byte** ImageBinary, char* nomImageBinary,
+void ndgToBinary(byte** ImageNdg, char* nomImageNdg, byte** ImageBinary, char* nomImageBinary,
 				long nrl, long nrh, long ncl, long nch)
 {
 	// Allocation
@@ -338,8 +372,9 @@ void colorToNdg(rgb8** ImageNdg, char* nomImageNdg, byte** ImageBinary, char* no
 				ImageBinary[lig][col] = 1;
 			else
 				ImageBinary[lig][col] = 0;
+		}
 	}
 
 	// Ecriture
-	SavePGM_bmatrix(ImageBinary,nrl,nrh,ncl,nch,nom_imageBinary);
+	SavePGM_bmatrix(ImageBinary,nrl,nrh,ncl,nch,nomImageBinary);
 }

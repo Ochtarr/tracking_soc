@@ -1,3 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+#include "def.h"
+#include "nrio.h"
+#include "nrarith.h"
+#include "nralloc.h"
+
 /*---------------------- 
 	Structures 
 ------------------------*/
@@ -26,7 +36,8 @@ void etiquettage(byte** binary, rgb8 ** image, char nomImageResultat[255], long 
 
 
 
-void colorToNdg(rgb8** ImageColor, char* nomImageColor, byte** ImageNdg, char* nomImageNdg, long nrl, long nrh, long ncl, long nch);
+void colorToNdg(rgb8** ImageColor, char* nomImageColor, byte** ImageNdg, char* nomImageNdg,
+				long nrl, long nrh, long ncl, long nch);
 void ndgToBinary(byte** ImageNdg, char* nomImageNdg, byte** ImageBinary, char* nomImageBinary, long nrl, long nrh, long ncl, long nch);
 
 

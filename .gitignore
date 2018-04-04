@@ -1,1 +1,8 @@
+# Binaries
 tpSuiviPersonne
+
+# Don't overload our git with so many images
+Images/
+
+# Zip transferred to drive : enable program execution
+Images_soc_tracking.zip

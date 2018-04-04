@@ -1,0 +1,3 @@
+#!/bin/bash
+
+gcc tpSuiviPersonne.c def.h nralloc.c nrarith.c nrio.c -o tpSuiviPersonne -lm

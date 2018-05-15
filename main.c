@@ -123,7 +123,7 @@ void unitTest_extractRefImg()
 				//Récupération des valeurs des pixels
 				int moy1 = (Image1[lig][col].r +  Image1[lig][col].g + Image1[lig][col].b) / 3;
 				int moy2 = (Image2[lig][col].r +  Image2[lig][col].g + Image2[lig][col].b) / 3;
-				//Binarisation	
+				//Seuillage	
 				if(abs(moy2 - moy1) > SEUIL)
 					ImageResultat[lig][col] = 255;	
 				else
